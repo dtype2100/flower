@@ -1,0 +1,33 @@
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y openssh-server
+
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN pip install --upgrade pip setuptools wheel 
+
+RUN pip install flwr[simulation]>=1.23.0 \
+    flwr-datasets[vision]>=0.5.0 \
+    scikit-learn>=1.6.1
+
+# SSH 설정 파일 수정: root 로그인을 허용하도록 설정
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# PAM(Pluggable Authentication Modules) 사용을 비활성화 (Docker 환경에서 종종 필요)
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+
+
+RUN echo 'root:password' | chpasswd
+
+# 컨테이너 시작 시 SSH 데몬을 실행하도록 설정
+CMD ["/usr/sbin/sshd", "-D"]
+
+CMD ["tail", "-f", "/dev/null"]

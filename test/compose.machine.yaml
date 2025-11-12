@@ -1,0 +1,43 @@
+services:
+  machine-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    container_name: machine-1
+    ports:
+      - "2222:22"
+  machine-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    container_name: machine-2
+    ports:
+      - "2223:22"
+  machine-3:
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    container_name: machine-3
+    ports:
+      - "2224:22"
+  machine-4:
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    container_name: machine-4
+    ports:
+      - "2225:22"
+  machine-5:
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    container_name: machine-5
+    ports:
+      - "2226:22"
+  machine-6:
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    container_name: machine-6
+    ports:
+      - "2227:22"
