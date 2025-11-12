@@ -1,0 +1,74 @@
+services:
+  main-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9091:9091"
+    command: ["flwr", "run", "."]
+  silo-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - FLWR_SUPERLINK_ADDRESS=main-server:9091
+      - PARTITION_ID=0
+      - NUM_PARTITIONS=6
+    command: ["flwr", "run", "."]
+    ports:
+      - "9092:9092"
+  silo-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - FLWR_SUPERLINK_ADDRESS=main-server:9091
+      - PARTITION_ID=1
+      - NUM_PARTITIONS=6
+    command: ["flwr", "run", "."]
+    ports:
+      - "9093:9093"
+  silo-3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - FLWR_SUPERLINK_ADDRESS=main-server:9091
+      - PARTITION_ID=2
+      - NUM_PARTITIONS=6
+    command: ["flwr", "run", "."]
+    ports:
+      - "9094:9094"
+  silo-4:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - FLWR_SUPERLINK_ADDRESS=main-server:9091
+      - PARTITION_ID=3
+      - NUM_PARTITIONS=6
+    command: ["flwr", "run", "."]
+    ports:
+      - "9095:9095"
+  silo-5:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - FLWR_SUPERLINK_ADDRESS=main-server:9091
+      - PARTITION_ID=4
+      - NUM_PARTITIONS=6
+    command: ["flwr", "run", "."]
+    ports:
+      - "9096:9096"
+  silo-6:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - FLWR_SUPERLINK_ADDRESS=main-server:9091
+      - PARTITION_ID=5
+      - NUM_PARTITIONS=6
+    command: ["flwr", "run", "."]
+    ports:
+      - "9097:9097"
